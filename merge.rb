@@ -5,6 +5,8 @@ require 'time'
 
 due = ARGV.shift
 
+clean = ARGV.shift
+
 def clock_timer(due, timer, biggest_timer)
   return timer.to_s if timer < 0
   return timer.to_s unless due
@@ -34,6 +36,11 @@ recipes.each do |name, data|
 end
 
 steps.sort_by!(&:first)
+
+if clean
+  puts steps.map { |x| x.join(" -- ") }
+  exit
+end
 
 steps.each do |timer, name, text|
   chunks = text.scan(/.{1,80}/)
