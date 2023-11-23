@@ -37,13 +37,8 @@ end
 
 steps.sort_by!(&:first)
 
-if clean
-  puts steps.map { |x| x.join(" -- ") }
-  exit
-end
-
 steps.each do |timer, name, text|
-  chunks = text.scan(/.{1,80}/)
+  chunks = clean ? [text] : text.scan(/.{1,80}/)
   puts "#{clock_timer(due, timer, biggest_timer).ljust(5)} -- #{name.ljust(longest_name)} -- #{chunks.first}"
   next unless chunks.size > 1
   chunks[1..-1].each { |x| puts ' ' * (5 + 8 + longest_name) + x }
